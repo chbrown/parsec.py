@@ -10,7 +10,7 @@ __author__ = "He Tao, sighingnow@gmail.com"
 import unittest
 
 from parsec import *
-from sexpr import *
+from .sexpr import *
 
 
 class TestSexpr(unittest.TestCase):
