@@ -9,8 +9,8 @@ __author__ = "He Tao, sighingnow@gmail.com"
 
 import unittest
 
-from parsec import *
-from .jsonc import *
+from parsec import ParseError
+from .jsonc import jsonc
 
 
 class TestJsonc(unittest.TestCase):

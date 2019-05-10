@@ -7,7 +7,9 @@ Use parsec.py to parse JSON text.
 
 __author__ = "He Tao, sighingnow@gmail.com"
 
-from parsec import *
+import re
+
+from parsec import generate, many, regex, sepBy, string
 
 whitespace = regex(r"\s*", re.MULTILINE)
 

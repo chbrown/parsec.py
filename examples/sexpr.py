@@ -9,7 +9,7 @@ __author__ = "He Tao, sighingnow@gmail.com"
 
 import re
 
-from parsec import *
+from parsec import generate, many, regex, string
 
 # ignore cases.
 whitespace = regex(r"\s+", re.MULTILINE)
