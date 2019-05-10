@@ -127,8 +127,7 @@ class Parser(object):
         res = self(text, 0)
         if res.status:
             return (res.value, text[res.index :])
-        else:
-            raise ParseError(res.expected, text, res.index)
+        raise ParseError(res.expected, text, res.index)
 
     def parse_strict(self, text):
         """Parse the longest possible prefix of the entire given string.
@@ -208,8 +207,7 @@ class Parser(object):
             end = other(text, res.index)
             if end.status:
                 return Value.success(end.index, res.value)
-            else:
-                return Value.failure(end.index, "ends with {}".format(end.expected))
+            return Value.failure(end.index, "ends with {}".format(end.expected))
 
         return ends_with_parser
 
@@ -225,8 +223,7 @@ class Parser(object):
             end = other(text, res.index)
             if end.status:
                 return res
-            else:
-                return Value.failure(end.index, "ends with {}".format(end.expected))
+            return Value.failure(end.index, "ends with {}".format(end.expected))
 
         return ends_with_parser
 
@@ -258,8 +255,7 @@ class Parser(object):
                 return Value.success(
                     res.index, (pos(text, index), res.value, pos(text, res.index))
                 )
-            else:
-                return res  # failed.
+            return res  # failed.
 
         return mark_parser
 
@@ -415,15 +411,13 @@ def generate(fn):
             endval = stop.value
             if isinstance(endval, Parser):
                 return endval(text, index)
-            else:
-                return Value.success(index, endval)
+            return Value.success(index, endval)
         except RuntimeError as error:
             stop = error.__cause__
             endval = stop.value
             if isinstance(endval, Parser):
                 return endval(text, index)
-            else:
-                return Value.success(index, endval)
+            return Value.success(index, endval)
 
     return generated.desc(fn.__name__)
 
@@ -493,9 +487,8 @@ def optional(p, default_value=None):
         res = p(text, index)
         if res.status:
             return Value.success(res.index, res.value)
-        else:
-            # Return the maybe existing default value without doing anything.
-            return Value.success(res.index, default_value)
+        # Return the maybe existing default value without doing anything.
+        return Value.success(res.index, default_value)
 
     return optional_parser
 
@@ -606,8 +599,7 @@ def one_of(s):
     def one_of_parser(text, index=0):
         if index < len(text) and text[index] in s:
             return Value.success(index + 1, text[index])
-        else:
-            return Value.failure(index, "one of {}".format(s))
+        return Value.failure(index, "one of {}".format(s))
 
     return one_of_parser
 
@@ -619,8 +611,7 @@ def none_of(s):
     def none_of_parser(text, index=0):
         if index < len(text) and text[index] not in s:
             return Value.success(index + 1, text[index])
-        else:
-            return Value.failure(index, "none of {}".format(s))
+        return Value.failure(index, "none of {}".format(s))
 
     return none_of_parser
 
@@ -632,8 +623,7 @@ def space():
     def space_parser(text, index=0):
         if index < len(text) and text[index].isspace():
             return Value.success(index + 1, text[index])
-        else:
-            return Value.failure(index, "one space")
+        return Value.failure(index, "one space")
 
     return space_parser
 
@@ -650,8 +640,7 @@ def letter():
     def letter_parser(text, index=0):
         if index < len(text) and text[index].isalpha():
             return Value.success(index + 1, text[index])
-        else:
-            return Value.failure(index, "a letter")
+        return Value.failure(index, "a letter")
 
     return letter_parser
 
@@ -663,8 +652,7 @@ def digit():
     def digit_parser(text, index=0):
         if index < len(text) and text[index].isdigit():
             return Value.success(index + 1, text[index])
-        else:
-            return Value.failure(index, "a digit")
+        return Value.failure(index, "a digit")
 
     return digit_parser
 
@@ -676,8 +664,7 @@ def eof():
     def eof_parser(text, index=0):
         if index >= len(text):
             return Value.success(index, None)
-        else:
-            return Value.failure(index, "EOF")
+        return Value.failure(index, "EOF")
 
     return eof_parser
 
@@ -690,15 +677,14 @@ def string(s):
         slen, tlen = len(s), len(text)
         if text[index : index + slen] == s:
             return Value.success(index + slen, s)
-        else:
-            matched = 0
-            while (
-                matched < slen
-                and index + matched < tlen
-                and text[index + matched] == s[matched]
-            ):
-                matched = matched + 1
-            return Value.failure(index + matched, s)
+        matched = 0
+        while (
+            matched < slen
+            and index + matched < tlen
+            and text[index + matched] == s[matched]
+        ):
+            matched = matched + 1
+        return Value.failure(index + matched, s)
 
     return string_parser
 
@@ -713,7 +699,6 @@ def regex(exp, flags=0):
         match = exp.match(text, index)
         if match:
             return Value.success(match.end(), match.group(0))
-        else:
-            return Value.failure(index, exp.pattern)
+        return Value.failure(index, exp.pattern)
 
     return regex_parser

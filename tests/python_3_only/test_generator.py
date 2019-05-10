@@ -9,7 +9,7 @@ __author__ = "He Tao, sighingnow@gmail.com"
 
 import unittest
 
-from parsec import *
+from parsec import count, digit, generate, string
 
 
 class ParserGeneratorWithReturnTest(unittest.TestCase):
@@ -36,13 +36,13 @@ class ParserGeneratorWithReturnTest(unittest.TestCase):
         self.assertEqual(y, "y")
 
         @generate
-        def fn():
+        def fn2():
             nonlocal x, y
             x = yield digit()
             y = yield count(digit(), 5)
             return None
 
-        self.assertEqual(fn.parse("123456"), None)
+        self.assertEqual(fn2.parse("123456"), None)
         self.assertEqual(x, "1")
         self.assertEqual(y, ["2", "3", "4", "5", "6"])
 

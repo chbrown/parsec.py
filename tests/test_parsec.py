@@ -1,18 +1,39 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from __future__ import generators
-
 """
 Test the basic functions of parsec.py.
 """
 
-__author__ = "He Tao, sighingnow@gmail.com"
+from __future__ import generators
 
-import random
 import unittest
 
-from parsec import *
+from parsec import (
+    ParseError,
+    count,
+    digit,
+    endBy,
+    endBy1,
+    generate,
+    letter,
+    many,
+    many1,
+    mark,
+    optional,
+    regex,
+    separated,
+    sepBy,
+    sepBy1,
+    sepEndBy,
+    sepEndBy1,
+    space,
+    spaces,
+    string,
+    times,
+)
+
+__author__ = "He Tao, sighingnow@gmail.com"
 
 
 class ParsecTest(unittest.TestCase):

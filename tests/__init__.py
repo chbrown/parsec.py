@@ -12,10 +12,10 @@ import unittest
 
 
 def additional_tests():
-    suite = unittest.TestSuite()
     """Accumulate all unit test cases."""
+    suite = unittest.TestSuite()
     loader = unittest.defaultTestLoader
-    ## some test cases use the syntax that Python 2 doesn't support.
+    # some test cases use the syntax that Python 2 doesn't support.
     additional_names = []
     if sys.version_info[0] >= 3 and sys.version_info[1] >= 3:
         additional_names.append("examples")
