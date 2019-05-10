@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 """
 A universal Python parser combinator library inspired by Parsec library of Haskell.
 """

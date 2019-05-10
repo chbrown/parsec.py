@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 """
 Used as test cases loader to load all unit tests under the examples directory for parsec.py.
 """
